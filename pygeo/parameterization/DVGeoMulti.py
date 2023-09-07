@@ -2616,6 +2616,10 @@ class CompIntersection:
             # and we need to invert the curves themselves
             seamConn = np.flip(seamConn, axis=0)
             seamConn = np.flip(seamConn, axis=1)
+      
+        # Brandon: check if we don't have any feature points
+        if len(breakList) == 0 :
+            breakList.append(np.array((0)))
 
         # roll so that the first breakList entry is the first node
         seamConn = np.roll(seamConn, -breakList[0], axis=0)
