@@ -2626,13 +2626,16 @@ class CompIntersection:
 
         # also adjust the feature indices
         breakList = np.mod(breakList - breakList[0], nElem)
-
-        # get the number of elements between each feature
-        curveSizes = []
-        for i in range(nFeature - 1):
-            curveSizes.append(np.mod(breakList[i + 1] - breakList[i], nElem))
-        # check the last curve outside the loop
-        curveSizes.append(np.mod(breakList[0] - breakList[-1], nElem))
+        # Brandon: new if condition here
+        # The code for multiple feature curves seems incorrect...
+        if nFeature > 1 :
+            curveSizes = []
+            for i in range(nFeature - 1):
+                curveSizes.append(np.mod(breakList[i + 1] - breakList[i], nElem))
+            # check the last curve outside the loop
+            curveSizes.append(np.mod(breakList[0] - breakList[-1], nElem))
+        else :
+            curveSizes = [nElem]
 
         # copy the curveSizes for the first call
         if firstCall:
