@@ -2017,6 +2017,10 @@ class CompIntersection:
         # Allreduce the triangulated mesh seeds
         dIdptTriA = self.comm.allreduce(dIdptTriA)
 
+        # Make dIdptTriA at least 3D
+        if len(dIdptTriA.shape) == 2:
+            dIdptTriA = np.array([dIdptTriA])
+            
         # Extract the entries of dIdptTri that are for points on this processor
         disp = self.compA.triMeshData["disp"]
         dIdptTriA = dIdptTriA[:, disp[self.comm.rank] : disp[self.comm.rank + 1], :]
@@ -2052,6 +2056,11 @@ class CompIntersection:
             dIdptTriB = np.zeros(self.compB.nodes.shape)
 
         dIdptTriB = self.comm.allreduce(dIdptTriB)
+        
+        # Make dIdptTriA at least 3D
+        if len(dIdptTriB.shape) == 2:
+            dIdptTriB = np.array([dIdptTriB])
+            
         disp = self.compB.triMeshData["disp"]
         dIdptTriB = dIdptTriB[:, disp[self.comm.rank] : disp[self.comm.rank + 1], :]
         compSensB = self.compB.DVGeo.totalSensitivity(dIdptTriB, "triMesh")
