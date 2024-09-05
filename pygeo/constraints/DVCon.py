@@ -1738,7 +1738,7 @@ class DVConstraints:
             # Newton search to find the matching parameter on the teCurve
             # for the same Y location    
             s = 0.5
-            for j in range(10) :
+            for j in range(20) :
                 f  = spanDir.dot(teCurve(s) - xyz[0,:])
                 df = spanDir.dot(teCurve.getDerivative(s))
                 s -= f / df
