@@ -853,13 +853,13 @@ class DVGeometryMulti:
         # this function reads the unstructured CGNS grid in filename and returns
         # node coordinates and element connectivities.
         # Here, only the root proc reads the cgns file, broadcasts node and connectivity info.
-
+        
         # only root proc reads the file
         if self.comm.rank == 0:
-            print(f"Reading file {filename}")
+            print(f"Reading file {filename}", flush=True)
             # use the default routine in tsurftools
             nodes, sectionDict = tsurf_tools.getCGNSsections(filename, comm=MPI.COMM_SELF)
-            print("Finished reading the cgns file")
+            print("Finished reading the cgns file", flush=True)
             
             # Convert the nodes to complex if necessary
             nodes = nodes.astype(self.dtype)
@@ -1284,9 +1284,6 @@ class CompIntersection:
         intersectPts = pts[indices]
         nPoints = len(intersectPts)
 
-        # Brandon: debug
-        #import pdb; pdb.set_trace()
-
         if self.projectFlag:
             # Create the dictionaries to save projection data
             self.projData[ptSetName] = {
@@ -1381,9 +1378,6 @@ class CompIntersection:
                 if len(compPoints) > 0:
                     self.associatePointsToSurface(compPoints, ptSetName, surface, surfaceEps)
                     
-            # Brandon: debug
-            #import pdb; pdb.set_trace()
-
             # Determine the component-wide projection indices for compA
             # Also remove any duplicates if points are assigned to multiple surfaces
             surfaceIndMapDictA = self.projData[ptSetName]["compA"]["surfaceIndMapDict"]
@@ -1474,9 +1468,6 @@ class CompIntersection:
                 # dict to save other data
                 self.curveProjData[ptSetName] = {}
 
-                # Brandon: debug
-                #import pdb; pdb.set_trace()
-                
                 # now loop over feature curves and use the epsilon that each curve has
                 # to determine which points maps to which curve
                 for curveName in allCurves:
@@ -1772,9 +1763,6 @@ class CompIntersection:
         if len(self.curvesOnB) > 0:
             flagB = True
 
-        # Brandon: debug
-        #import pdb; pdb.set_trace()
-        
         # do the pts on the intersection outside the loop
         nptsg = self.nCurvePts[ptSetName]["intersection"]
 

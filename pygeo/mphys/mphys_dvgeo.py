@@ -705,6 +705,35 @@ class OM_DVGEOCOMP(om.ExplicitComponent):
         )
         self.add_output(name, distributed=False, val=np.ones((nSpan * nChord,)), shape=nSpan * nChord)
 
+    def nom_addMaxThicknessToChordConstraint(
+        self,
+        name=None,
+        leList,
+        teList,
+        nSpan,
+        nChord,
+        axis,
+        chordDir,
+        addToPyOpt=True,
+        surfaceName="default",
+        DVGeoName="default",
+        compNames=None,
+    ):
+        self.DVCon.addMaxThicknessToChordConstraints2D(
+            leList,
+            teList,
+            nSpan,
+            nChord,
+            axis,
+            chordDir,
+            name=name,
+            addToPyOpt=addToPyOpt,
+            surfaceName=surfaceName,
+            DVGeoName=DVGeoName,
+            compNames=compNames,
+        )
+        self.add_output(name, distributed=False, val=np.ones(nSpan), shape=nSpan)
+
     def nom_addThicknessConstraints1D(
         self,
         name,
