@@ -769,7 +769,7 @@ class OM_DVGEOCOMP(om.ExplicitComponent):
 
     def nom_addMaxThicknessToChordConstraint(
         self,
-        name=None,
+        name,
         leList,
         teList,
         nSpan,
